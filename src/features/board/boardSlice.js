@@ -16,6 +16,7 @@ const initialState = [
 export const setBoard = contents => {
     return {
         type: 'board/setBoard',
+        //payload is an array which contain an random shuffle contents words
         payload: contents
     }
 };
@@ -25,6 +26,7 @@ export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'board/setBoard':
             let newState = [...state];
+            //for each word in the random words array, we set the "contents" key of the newState array equal to that word
             action.payload.forEach((content,index) => {
                 newState[index].contents = content
             })
@@ -36,3 +38,4 @@ export const boardReducer = (state = initialState, action) => {
 
 //Selectors
 export const selectBoard = state => state.board;
+export const selectContents = state =>  state.board.map(item => item.contents);
