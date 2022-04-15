@@ -2,7 +2,7 @@ import React from "react";
 //import selectBoard and useSelector to get the board state
 import { selectBoard } from "./boardSlice";
 import { useSelector } from "react-redux";
-import { CardRow } from "./CardRow/CardRow";
+import { CardRow } from "./cardRow/CardRow";
 export function Board() {
     //get the current board's state
     const currentBoard = useSelector(selectBoard);
