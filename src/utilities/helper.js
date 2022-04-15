@@ -6,10 +6,8 @@ export const shuffleContents = contents => {
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
+        //swap the current item with the random item 
+        [copyArr[currentIndex], copyArr[randomIndex]] = [copyArr[randomIndex], copyArr[currentIndex]];
     }
-
-    //swap the current item with the random item 
-    [copyArr[currentIndex], copyArr[randomIndex]] = [copyArr[randomIndex], copyArr[currentIndex]];
     return copyArr;
-}
-
+};

@@ -13,9 +13,10 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 //Action creators
-export const setBoard = () => {
+export const setBoard = contents => {
     return {
         type: 'board/setBoard',
+        payload: contents
     }
 };
 
@@ -23,13 +24,11 @@ export const setBoard = () => {
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'board/setBoard':
-            let setState = [...state];
-            return setState.map(card => {
-                return {
-                    ...card,
-                    visible: false
-                }
-            }) 
+            let newState = [...state];
+            action.payload.forEach((content,index) => {
+                newState[index].contents = content
+            })
+           return newState;
         default:
             return state;
     }

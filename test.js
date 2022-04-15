@@ -13,10 +13,16 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 
-let newState = [...initialState];
-console.log(newState.map(element => {
-    return ({
-        ...element,
-        visible: false
-    })
-}));
+const wordsArr = [
+    'useSelector()', 'react-redux',
+    'react-redux', 'selector',
+    'useSelector()', 'useDispatch()',
+    'Provider', 'selector',
+    'Pure Function', 'useDispatch()',
+    'Pure Function', 'Provider'
+];
+let finalArr = [...initialState];
+for(let i = 0; i < wordsArr.length; i++) {
+    finalArr[i].contents = wordsArr[i];
+}
+console.log(finalArr);
