@@ -1,13 +1,7 @@
-import React from 'react';
-import { Card } from './card/Card.js';
+import React from "react";
 
-export const CardRow = ({ cards }) => {
-  const content = cards.map(card => 
-    <Card 
-      key={card.id} 
-      id={card.id} 
-      contents={card.contents} 
-  />)
-
-  return <>{content}</>;
-};
+export const CardRow = () => {
+    return (
+        <div className="card-row"></div>
+    )
+}

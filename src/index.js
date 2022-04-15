@@ -2,8 +2,8 @@ import './index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './app/App';
-import { store } from './app/store.js';
-// Add import statement below
+import store from './app/store';
+//Provider from react-redux;
 import { Provider } from 'react-redux';
 
 const root = createRoot(document.getElementById('root'));

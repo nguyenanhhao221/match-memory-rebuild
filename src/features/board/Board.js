@@ -1,36 +1,41 @@
-import React from 'react';
-import { CardRow } from './cardRow/CardRow.js';
-// Add import statements below
-import { useSelector } from 'react-redux';
-import { selectBoard } from './boardSlice.js';
+import React from "react";
+//import selectBoard and useSelector to get the board state
+import { selectBoard } from "./boardSlice";
+import { useSelector } from "react-redux";
+import { CardRow } from "./CardRow/CardRow";
+export function Board() {
+    //get the current board's state
+    const currentBoard = useSelector(selectBoard);
 
-export const Board = () => {
-  // Add selected data variable and implement below
-  const currentBoard = useSelector(selectBoard);
+    //Determine how many rows are there base on total cards and 3 columns.
+    const numberOfCards = currentBoard.length;
+    const columns = 3;
+    const rows = Math.floor(numberOfCards / columns);
 
-  const numberOfCards = currentBoard.length;
-  const columns = 3;
-  const rows = Math.floor(numberOfCards / columns);
+    //Determine which row contain which card
+    let cardBoardSplitColumns = [];
+    for (let i = 0; i < currentBoard.length; i += columns) {
+        cardBoardSplitColumns.push(currentBoard.slice(i, i + columns));
+    };
 
-  const getRowCards = (row) => {
-    const rowCards = [];
-    for (let j = 0; j < columns; j++) {
-      const cardIndex = row * columns + j;
-      // Implement selected data below
-      rowCards.push(currentBoard[cardIndex]);
+    let content = [];
+    for (let row = 0; row < rows; row++) {
+        let rowCards = cardBoardSplitColumns[row];
+        content.push(
+            <CardRow
+                cards={rowCards}
+                key={row} />
+        )
     }
-    return rowCards;
-  };
-
-  let content = [];
-  for (let row = 0; row < rows; row++) {
-    const rowCards = getRowCards(row);
-    content.push(
-      <CardRow 
-        key={row} 
-        cards={rowCards} 
-      />
-    );
-  }
-  return <div className="cards-container">{content}</div>;
+    //style to adjust the columns of the board
+    const style = {
+        gridTemplateColumns: `repeat(${columns}, 138px)`
+    }
+    return (
+        <div
+            className="cards-container"
+            style={style}>
+            {content}
+        </div>
+    )
 };

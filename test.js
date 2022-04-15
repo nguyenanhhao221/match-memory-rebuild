@@ -13,15 +13,9 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 
-export const boardReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case '':
-            
-            break;
-    
-        default:
-            return state;
-    }
-};
-
-export const selectBoard = state => state.board;
+const resultArr = [];
+const columns = 3;
+for (let i = 0; i < initialState.length; i+=columns) {
+    resultArr.push(initialState.slice(i,i+columns))
+}
+console.log(resultArr);
