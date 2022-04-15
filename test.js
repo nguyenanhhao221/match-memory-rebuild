@@ -13,9 +13,10 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 
-const resultArr = [];
-const columns = 3;
-for (let i = 0; i < initialState.length; i+=columns) {
-    resultArr.push(initialState.slice(i,i+columns))
-}
-console.log(resultArr);
+let newState = [...initialState];
+console.log(newState.map(element => {
+    return ({
+        ...element,
+        visible: false
+    })
+}));

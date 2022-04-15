@@ -12,16 +12,28 @@ const initialState = [
     { id: 10, contents: 'react-redux', visible: true, matched: true },
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
+//Action creators
+export const setBoard = () => {
+    return {
+        type: 'board/setBoard',
+    }
+};
 
+//Reducer
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
-        case '':
-            
-            break;
-    
+        case 'board/setBoard':
+            let setState = [...state];
+            return setState.map(card => {
+                return {
+                    ...card,
+                    visible: false
+                }
+            }) 
         default:
             return state;
     }
 };
 
+//Selectors
 export const selectBoard = state => state.board;
