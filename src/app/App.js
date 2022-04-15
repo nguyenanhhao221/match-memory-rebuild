@@ -1,8 +1,10 @@
 import React from "react";
 import { Board } from "../features/board/Board";
+import { Score } from "../features/score/Score";
 const App = () => {
     return (
         <div className="App">
+            <Score />
             <Board />
             <footer className="footer">
                 <button className="start-button">
