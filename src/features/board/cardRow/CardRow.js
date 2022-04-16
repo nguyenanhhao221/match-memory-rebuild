@@ -10,6 +10,7 @@ export const CardRow = ({ cards }) => {
                         key={card.id}
                         card={card}
                         content={card.contents}
+                        id={card.id}
                     />
                 )
             })}

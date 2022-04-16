@@ -13,6 +13,7 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 //Action creators
+//setBoard will takes in an array contain a shuffled words for "contents" property
 export const setBoard = contents => {
     return {
         type: 'board/setBoard',
@@ -21,6 +22,14 @@ export const setBoard = contents => {
     }
 };
 
+
+//flipCard will changes the card visible to true
+export const flipCard = id => {
+    return {
+        type: 'board/flipCard',
+        payload: id
+    }
+}
 //Reducer
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -29,10 +38,19 @@ export const boardReducer = (state = initialState, action) => {
             //for each word in the random words array, we set the "contents" key of the newState array equal to that word
             action.payload.forEach((content,index) => {
                 newState[index].contents = content;
-                // newState[index].visible = false;
+                newState[index].visible = false;
                 newState[index].matched = false;
             })
            return newState;
+        case 'board/flipCard':
+           let flipState = [...state];
+           let cardID = action.payload;
+           
+           let cardBeingFlip = flipState.filter(card => card.id === cardID);
+           //set the visible to true
+           cardBeingFlip[0].visible = true;
+           //replace the cardBeingFlip with visible as true back to the current flipState array
+           return flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
         default:
             return state;
     }

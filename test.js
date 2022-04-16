@@ -13,16 +13,11 @@ const initialState = [
     { id: 11, contents: 'react-redux', visible: true, matched: true },
 ];
 
-const wordsArr = [
-    'useSelector()', 'react-redux',
-    'react-redux', 'selector',
-    'useSelector()', 'useDispatch()',
-    'Provider', 'selector',
-    'Pure Function', 'useDispatch()',
-    'Pure Function', 'Provider'
-];
-let finalArr = [...initialState];
-for(let i = 0; i < wordsArr.length; i++) {
-    finalArr[i].contents = wordsArr[i];
-}
-console.log(finalArr);
+let flipState = [...initialState];
+let cardID = 1;
+let cardBeingFlip = flipState.filter(card => card.id === cardID);
+console.log(cardBeingFlip);
+cardBeingFlip[0].visible = false;
+flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
+// console.log(flipState);
+
