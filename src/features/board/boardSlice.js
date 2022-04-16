@@ -28,7 +28,9 @@ export const boardReducer = (state = initialState, action) => {
             let newState = [...state];
             //for each word in the random words array, we set the "contents" key of the newState array equal to that word
             action.payload.forEach((content,index) => {
-                newState[index].contents = content
+                newState[index].contents = content;
+                // newState[index].visible = false;
+                newState[index].matched = false;
             })
            return newState;
         default:
