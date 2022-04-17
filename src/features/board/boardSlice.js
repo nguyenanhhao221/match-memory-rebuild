@@ -59,3 +59,5 @@ export const boardReducer = (state = initialState, action) => {
 //Selectors
 export const selectBoard = state => state.board;
 export const selectContents = state =>  state.board.map(item => item.contents);
+//select an array contents which card id is visible is true
+export const selectVisibleID = state => state.board.filter(card => card.visible).map(visibleCard => visibleCard.id);

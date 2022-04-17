@@ -1,6 +1,6 @@
 import React from "react";
-import { flipCard } from "../../boardSlice";
-import { useDispatch } from "react-redux";
+import { flipCard, selectVisibleID } from "../../boardSlice";
+import { useDispatch,useSelector } from "react-redux";
 const cardLogo = "https://static-assets.codecademy.com/Courses/Learn-Redux/matching-game/codecademy_logo.png";
 
 export const Card = ({ content, card, id }) => {
@@ -22,6 +22,9 @@ export const Card = ({ content, card, id }) => {
         dispatch(flipCard(id))
     }
     const cardStyle = 'resting';
+
+    //visibleSelector
+    let visibleIDs = useSelector(selectVisibleID);
     return (
         <button
             className={`card ${cardStyle}`}
