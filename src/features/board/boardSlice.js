@@ -38,6 +38,13 @@ export const tryNewPair = visibleCards => {
         payload: visibleCards
     }
 }
+//flipCardNotMatch
+export const flipCardNotMatch = id => {
+    return {
+        type: 'board/flipCardNotMatch',
+        payload: id
+    }
+};
 //Reducer
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -77,9 +84,12 @@ export const boardReducer = (state = initialState, action) => {
             }
             return flipState;
 
-
+        case 'board/flipCardNotMatch':
+            let flipCardNotMatchState = [...state];
+            flipCardNotMatchState.forEach(card => card.id !== action.payload ? card.visible = false : card.visible = true);
+            return flipCardNotMatchState;
         case 'board/tryNewPair':
-            return state.map(card => ({ ...card, visible: false }))
+            return state.map(card => ({ ...card, visible: false }));
         default:
             return state;
     }
