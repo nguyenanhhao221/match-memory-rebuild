@@ -1,5 +1,5 @@
 import React from "react";
-import { flipCard, selectVisibleID, selectMatchIDs, selectNotMatchIDs } from "../../boardSlice";
+import { flipCard, flipCardNotMatch, selectVisibleID, selectMatchIDs, selectNotMatchIDs } from "../../boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 const cardLogo = "https://static-assets.codecademy.com/Courses/Learn-Redux/matching-game/codecademy_logo.png";
 
@@ -17,6 +17,10 @@ export const Card = ({ content, card, id }) => {
     let flipHandler = id => {
         dispatch(flipCard(id))
     }
+    //flipNotMatch will run when click on the third card and the previous 2 is not matched.
+    let flipNotMatch = id => {
+        dispatch(flipCardNotMatch(id))
+    }
 
     //visibleSelector and matchIds selector
     let visibleIDs = useSelector(selectVisibleID);
@@ -27,9 +31,11 @@ export const Card = ({ content, card, id }) => {
         cardText = content;
         click = () => { };
     }
-    //if visibleIDs array contains more than 2 card, then when click new card will not flip
+    //if visibleIDs array contains more than 2 card, then when click new card will run the flipNotMatch handler which run the flipCardNotMatch action
+    //this action will flip the third card and close the 2 previous cards, if the 2 previous cards is not matched
     if (visibleIDs.length === 2) {
-        click = () => { };
+        // click = () => { };
+        click = () => {flipNotMatch(id)};
     }
     //cardStyle will change depends on the match property 
     let cardStyle = 'resting';
