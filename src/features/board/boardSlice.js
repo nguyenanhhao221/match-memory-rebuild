@@ -36,21 +36,34 @@ export const boardReducer = (state = initialState, action) => {
         case 'board/setBoard':
             let newState = [...state];
             //for each word in the random words array, we set the "contents" key of the newState array equal to that word
-            action.payload.forEach((content,index) => {
+            action.payload.forEach((content, index) => {
                 newState[index].contents = content;
                 newState[index].visible = false;
                 newState[index].matched = false;
             })
-           return newState;
+            return newState;
         case 'board/flipCard':
-           let flipState = [...state];
-           let cardID = action.payload;
-           
-           let cardBeingFlip = flipState.filter(card => card.id === cardID);
-           //set the visible to true
-           cardBeingFlip[0].visible = true;
-           //replace the cardBeingFlip with visible as true back to the current flipState array
-           return flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
+            let flipState = [...state];
+            let cardID = action.payload;
+
+            let cardBeingFlip = flipState.filter(card => card.id === cardID);
+            //set the visible to true
+            cardBeingFlip[0].visible = true;
+            //replace the cardBeingFlip with visible as true back to the current flipState array
+            flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
+            //filter out the card that have visible true and match is false
+            //that means they are being flipped and need to check of match or not
+            //we will only check if these condition filter out at least 2 cards and then the contents of these 2 cards matched each other
+            // if yes, update the match property to true and replace these 2 cards back in the the flipState using their id with match property updated
+            let checkMatchedCards = flipState.filter(card => !card.matched && card.visible);
+            if (checkMatchedCards.length >= 2 && checkMatchedCards[0].contents === checkMatchedCards[1].contents) {
+                //update each card matched property to true if contents match
+                checkMatchedCards.forEach(card => card.matched = true);
+                //then replace these newly updated card back in to the flipState using their id
+                checkMatchedCards.forEach(cardToCheck => flipState.map(cardFlip => cardFlip.id !== cardToCheck.id ? cardFlip : cardToCheck))
+            }
+            return flipState;
+
         default:
             return state;
     }
@@ -58,6 +71,12 @@ export const boardReducer = (state = initialState, action) => {
 
 //Selectors
 export const selectBoard = state => state.board;
-export const selectContents = state =>  state.board.map(item => item.contents);
-//select an array contents which card id is visible is true
-export const selectVisibleID = state => state.board.filter(card => card.visible).map(visibleCard => visibleCard.id);
+export const selectContents = state => state.board.map(item => item.contents);
+//select an array contains which card id is visible is true
+export const selectVisibleID = state => state.board
+    .filter(card => card.visible)
+    .map(visibleCard => visibleCard.id);
+//select an array contains which card id and match is true
+export const selectMatchIDs = state => state.board
+    .filter(card => card.matched)
+    .map(matchCard => matchCard.id);
