@@ -62,11 +62,16 @@ export const boardReducer = (state = initialState, action) => {
             //filter out the card that have visible true and match is false
             //that means they are being flipped and need to check of match or not
             //we will only check if these condition filter out at least 2 cards and then the contents of these 2 cards matched each other
-            // if yes, update the match property to true and replace these 2 cards back in the the flipState using their id with match property updated
+            // if yes, update the match property to true and visible back to false. The reason for visible back to false because we want the visibleIDs selector contains no more than 2 cards
+            // even though after cards match and we set that matched 2 card visible to true, on the web we still see because we will set the cardStyle to matched
+            // and replace these 2 cards back in the the flipState using their id with match property updated
             let checkMatchedCards = flipState.filter(card => !card.matched && card.visible);
             if (checkMatchedCards.length >= 2 && checkMatchedCards[0].contents === checkMatchedCards[1].contents) {
-                //update each card matched property to true if contents match
-                checkMatchedCards.forEach(card => card.matched = true);
+                //update each card matched property to true if contents match and visible to false
+                checkMatchedCards.forEach(card => {
+                    card.matched = true;
+                    card.visible = false;
+                });
                 //then replace these newly updated card back in to the flipState using their id
                 checkMatchedCards.forEach(cardToCheck => flipState.map(cardFlip => cardFlip.id !== cardToCheck.id ? cardFlip : cardToCheck))
             }
@@ -74,7 +79,7 @@ export const boardReducer = (state = initialState, action) => {
 
 
         case 'board/tryNewPair':
-            return state.map(card => ({...card}))
+            return state.map(card => ({ ...card, visible: false }))
         default:
             return state;
     }
