@@ -30,6 +30,14 @@ export const flipCard = id => {
         payload: id
     }
 }
+
+//tryNewPair will fold the current pair cards if they not matched
+export const tryNewPair = visibleCards => {
+    return {
+        type: 'board/tryNewPair',
+        payload: visibleCards
+    }
+}
 //Reducer
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -64,6 +72,9 @@ export const boardReducer = (state = initialState, action) => {
             }
             return flipState;
 
+
+        case 'board/tryNewPair':
+            return state.map(card => ({...card}))
         default:
             return state;
     }
