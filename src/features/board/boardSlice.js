@@ -74,7 +74,7 @@ export const boardReducer = (state = initialState, action) => {
 
 
         case 'board/tryNewPair':
-            return state.map(card => ({...card}))
+            return state.map(card => ({ ...card, visible: false }))
         default:
             return state;
     }
