@@ -96,3 +96,7 @@ export const selectVisibleID = state => state.board
 export const selectMatchIDs = state => state.board
     .filter(card => card.matched)
     .map(matchCard => matchCard.id);
+//select an array contains which card's is is not matched
+export const selectNotMatchIDs = state => state.board
+    .filter(card => card.visible && !card.matched)
+    .map(card => card.id);

@@ -1,5 +1,5 @@
 import React from "react";
-import { flipCard, selectVisibleID, selectMatchIDs } from "../../boardSlice";
+import { flipCard, selectVisibleID, selectMatchIDs, selectNotMatchIDs } from "../../boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 const cardLogo = "https://static-assets.codecademy.com/Courses/Learn-Redux/matching-game/codecademy_logo.png";
 
@@ -21,6 +21,7 @@ export const Card = ({ content, card, id }) => {
     //visibleSelector and matchIds selector
     let visibleIDs = useSelector(selectVisibleID);
     let matchIDs = useSelector(selectMatchIDs);
+    let notMatchIDs = useSelector(selectNotMatchIDs);
     //if the id of the card exist in the visible id selector, display the content
     if (visibleIDs.includes(id) || matchIDs.includes(id)) {
         cardText = content;
@@ -35,7 +36,12 @@ export const Card = ({ content, card, id }) => {
     //if the match selector contain the card id, this card will have "matched" style
     if (matchIDs.includes(id)) {
         cardStyle = 'matched';
+    };
+    //if the no match ids contains more than 2 and the card is in that array
+    if (notMatchIDs.length === 2 && notMatchIDs.includes(id)) {
+        cardStyle = 'no-match';
     }
+
     return (
         <button
             className={`card ${cardStyle}`}
