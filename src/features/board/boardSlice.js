@@ -30,27 +30,38 @@ export const flipCard = id => {
         payload: id
     }
 }
+
+//tryNewPair will fold the current pair cards if they not matched
+export const tryNewPair = visibleCards => {
+    return {
+        type: 'board/tryNewPair',
+        payload: visibleCards
+    }
+}
 //Reducer
 export const boardReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'board/setBoard':
             let newState = [...state];
             //for each word in the random words array, we set the "contents" key of the newState array equal to that word
-            action.payload.forEach((content,index) => {
+            action.payload.forEach((content, index) => {
                 newState[index].contents = content;
                 newState[index].visible = false;
                 newState[index].matched = false;
             })
-           return newState;
+            return newState;
         case 'board/flipCard':
-           let flipState = [...state];
-           let cardID = action.payload;
-           
-           let cardBeingFlip = flipState.filter(card => card.id === cardID);
-           //set the visible to true
-           cardBeingFlip[0].visible = true;
-           //replace the cardBeingFlip with visible as true back to the current flipState array
-           return flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
+            let flipState = [...state];
+            let cardID = action.payload;
+
+            let cardBeingFlip = flipState.filter(card => card.id === cardID);
+            //set the visible to true
+            cardBeingFlip[0].visible = true;
+            //replace the cardBeingFlip with visible as true back to the current flipState array
+            return flipState = flipState.map(card => card.id !== cardBeingFlip[0].id ? card : cardBeingFlip[0]);
+
+        case 'board/tryNewPair':
+            return state.map(card => ({...card}))
         default:
             return state;
     }
@@ -58,6 +69,6 @@ export const boardReducer = (state = initialState, action) => {
 
 //Selectors
 export const selectBoard = state => state.board;
-export const selectContents = state =>  state.board.map(item => item.contents);
+export const selectContents = state => state.board.map(item => item.contents);
 //select an array contents which card id is visible is true
 export const selectVisibleID = state => state.board.filter(card => card.visible).map(visibleCard => visibleCard.id);

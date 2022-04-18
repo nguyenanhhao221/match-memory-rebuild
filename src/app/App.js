@@ -1,7 +1,7 @@
 import React from "react";
 import { Board } from "../features/board/Board";
 import { Score } from "../features/score/Score";
-import { setBoard, selectContents } from "../features/board/boardSlice";
+import { setBoard, selectContents, tryNewPair } from "../features/board/boardSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { shuffleContents } from "../utilities/helper";
 
@@ -13,9 +13,13 @@ const App = () => {
     const currentContents = useSelector(selectContents);
     //then random that arrays of words contents
     const randomContents = shuffleContents(currentContents);
-    //onClick handler for the start game button
-    const onClickHandler = () => {
+    //setStartHandler handler for the start game button
+    const setStartHandler = () => {
         dispatch(setBoard(randomContents));
+    }
+    //tryNewPair handler for the try new pair button
+    const tryNewPairHandler = () => {
+        dispatch(tryNewPair());
     }
     return (
         <div className="App">
@@ -24,10 +28,12 @@ const App = () => {
             <footer className="footer">
                 <button
                     className="start-button"
-                    onClick={() => onClickHandler()}>
+                    onClick={() => setStartHandler()}>
                     Start Game
                 </button>
-                <button className="try-new-pair-button">
+                <button 
+                    className="try-new-pair-button"
+                    onClick={tryNewPairHandler}>
                     Try New Pair
                 </button>
             </footer>
