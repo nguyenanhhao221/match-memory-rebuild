@@ -1,6 +1,6 @@
 import React from "react";
 import { flipCard, selectVisibleID } from "../../boardSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const cardLogo = "https://static-assets.codecademy.com/Courses/Learn-Redux/matching-game/codecademy_logo.png";
 
 export const Card = ({ content, card, id }) => {
@@ -24,7 +24,11 @@ export const Card = ({ content, card, id }) => {
     const cardStyle = 'resting';
 
     //visibleSelector
+    //if visibleIDs array contains more than 2 card, then when click new card will not flip
     let visibleIDs = useSelector(selectVisibleID);
+    if (visibleIDs.length >= 2) {
+        click = () => { };
+    }
     return (
         <button
             className={`card ${cardStyle}`}
